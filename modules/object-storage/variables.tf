@@ -3,12 +3,6 @@ variable "compartment_id" {
   description = "The OCID of the compartment where the buckets will be created."
 }
 
-variable "object_storage_namespace" {
-  type        = string
-  description = "The Object Storage namespace to use."
-  default     = "object_storage_namespace"
-}
-
 variable "environment" {
   type        = string
   description = "The environment (e.g., prod, staging, dev)."
