@@ -1,6 +1,5 @@
 # modules/object-storage/main.tf
 
-data "oci_region" "current" {}
 data "oci_objectstorage_namespace" "current_namespace" {}
 
 resource "oci_objectstorage_bucket" "django_store" {
@@ -123,7 +122,7 @@ resource "oci_identity_group" "bucket_access_group" {
 }
 
 # Add User to the Group
-resource "oci_identity_group_membership" "bucket_access_membership" {
+resource "oci_identity_user_group_membership" "bucket_access_membership" {
   group_id = oci_identity_group.bucket_access_group.id
   user_id  = oci_identity_user.bucket_access_user.id
 }
