@@ -17,6 +17,7 @@ resource "local_file" "kube_config_file" {
   filename        = var.kubeconfig_filename
   file_permission = "0600"
 
+  depends_on = [module.cluster[0].oci_containerengine_cluster]
 }
 
 output "kubeconfig_file_path" {

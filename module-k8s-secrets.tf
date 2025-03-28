@@ -20,6 +20,45 @@ module "kubernetes_s3_secrets" {
   tempo_s3_secret_key   = var.tempo_s3_secret_key != "" ? var.tempo_s3_secret_key : module.object_storage.bucket_access_secret_key
   tempo_s3_endpoint_url = module.object_storage.object_storage_s3_endpoint
   tempo_s3_region       = module.object_storage.object_storage_region
+
+  emtmlib_keys_key1_value                   = var.emtmlib_keys_key1
+  emtmlib_keys_key2_value                   = var.emtmlib_keys_key2
+  loki_bucket_creds_access_key_value        = var.loki_bucket_creds_access_key
+  oracle_docker_creds_password_value        = var.oracle_docker_creds_password
+  django_github_oauth_client_secret_value   = var.django_github_oauth_client_secret
+  django_superuser_username_value           = var.django_superuser_username
+  s3_creds_access_key_value                 = var.s3_creds_access_key
+  stereolib_keys_key1_value                 = var.stereolib_keys_key1
+  django_github_oauth_client_id_value       = var.django_github_oauth_client_id
+  oracle_db_pass_value                      = var.oracle_db_pass
+  postgres_auth_password_value              = var.postgres_auth_password
+  rabbitmq_auth_password_value              = var.rabbitmq_auth_password
+  grafana_github_oauth_client_secret_value  = var.grafana_github_oauth_client_secret
+  loki_bucket_creds_secret_key_value        = var.loki_bucket_creds_secret_key
+  django_superuser_password_value           = var.django_superuser_password
+  letsencrypt_cert_tls_key_value            = var.letsencrypt_cert_tls_key
+  dockercred_email_value                    = var.dockercred_email
+  dockercred_password_value                 = var.dockercred_password
+  rabbitmq_auth_erlang_cookie_value         = var.rabbitmq_auth_erlang_cookie
+  oracle_docker_creds_username_value        = var.oracle_docker_creds_username
+  s3_creds_secret_key_value                 = var.s3_creds_secret_key
+  letsencrypt_account_key_tls_key_value     = var.letsencrypt_account_key_tls_key
+  oracle_docker_creds_registry_server_value = var.oracle_docker_creds_registry_server
+  cloudflare_api_token_value                = var.cloudflare_api_token
+  django_superuser_email_value              = var.django_superuser_email
+  letsencrypt_cert_tls_crt_value            = var.letsencrypt_cert_tls_crt
+  dockercred_registry_server_value          = var.dockercred_registry_server
+  grafana_github_oauth_client_id_value      = var.grafana_github_oauth_client_id
+  maxmind_licence_key_value                 = var.maxmind_licence_key
+  stereolib_keys_key2_value                 = var.stereolib_keys_key2
+  django_secret_key_value                   = var.django_secret_key
+  dockercred_username_value                 = var.dockercred_username
+
+  depends_on = [
+    resource.local_file.kube_config_file,
+    module.cluster[0].oci_containerengine_cluster
+  ]
+
 }
 
 
@@ -94,4 +133,138 @@ variable "tempo_s3_region" {
   type        = string
   description = "(Optional) Region for Tempo S3 secrets."
   default     = ""
+}
+
+
+variable "emtmlib_keys_key1" {
+  type        = string
+  description = "emtmlib_keys_key1"
+}
+variable "emtmlib_keys_key2" {
+  type        = string
+  description = "emtmlib_keys_key2"
+}
+variable "loki_bucket_creds_access_key" {
+  type        = string
+  description = "loki_bucket_creds_access_key"
+}
+variable "oracle_docker_creds_password" {
+  type        = string
+  description = "oracle_docker_creds_password"
+}
+variable "django_github_oauth_client_secret" {
+  type        = string
+  description = "django_github_oauth_client_secret"
+}
+
+variable "django_superuser_username" {
+  type        = string
+  description = "django_superuser_username"
+}
+variable "s3_creds_access_key" {
+  type        = string
+  description = "s3_creds_access_key"
+}
+variable "stereolib_keys_key1" {
+  type        = string
+  description = "stereolib_keys_key1"
+}
+variable "django_github_oauth_client_id" {
+  type        = string
+  description = "django_github_oauth_client_id"
+}
+variable "oracle_db_pass" {
+  type        = string
+  description = "oracle_db_pass"
+}
+variable "postgres_auth_password" {
+  type        = string
+  description = "postgres_auth_password"
+}
+variable "rabbitmq_auth_password" {
+  type        = string
+  description = "rabbitmq_auth_password"
+}
+variable "grafana_github_oauth_client_secret" {
+  type        = string
+  description = "grafana_github_oauth_client_secret"
+}
+variable "loki_bucket_creds_secret_key" {
+  type        = string
+  description = "loki_bucket_creds_secret_key"
+}
+variable "django_superuser_password" {
+  type        = string
+  description = "django_superuser_password"
+}
+variable "letsencrypt_cert_tls_key" {
+  type        = string
+  description = "letsencrypt_cert_tls_key"
+}
+variable "dockercred_email" {
+  type        = string
+  description = "dockercred_email"
+}
+variable "dockercred_password" {
+  type        = string
+  description = "dockercred_password"
+}
+variable "rabbitmq_auth_erlang_cookie" {
+  type        = string
+  description = "rabbitmq_auth_erlang_cookie"
+}
+
+variable "oracle_docker_creds_username" {
+  type        = string
+  description = "oracle_docker_creds_username"
+}
+variable "s3_creds_secret_key" {
+  type        = string
+  description = "s3_creds_secret_key"
+}
+variable "letsencrypt_account_key_tls_key" {
+  type        = string
+  description = "letsencrypt_account_key_tls_key"
+}
+variable "oracle_docker_creds_registry_server" {
+  type        = string
+  description = "oracle_docker_creds_registry_server"
+}
+
+variable "cloudflare_api_token" {
+  type        = string
+  description = "cloudflare_api_token"
+}
+variable "django_superuser_email" {
+  type        = string
+  description = "django_superuser_email"
+}
+variable "letsencrypt_cert_tls_crt" {
+  type        = string
+  description = "letsencrypt_cert_tls_crt"
+}
+variable "dockercred_registry_server" {
+  type        = string
+  description = "dockercred_registry_server"
+}
+variable "grafana_github_oauth_client_id" {
+  type        = string
+  description = "grafana_github_oauth_client_id"
+}
+variable "maxmind_licence_key" {
+  type        = string
+  description = "maxmind_licence_key"
+}
+variable "stereolib_keys_key2" {
+  type        = string
+  description = "stereolib_keys_key2"
+}
+variable "django_secret_key" {
+  type        = string
+  description = "django_secret_key"
+}
+
+variable "dockercred_username" {
+  type        = string
+  description = "dockercred_username"
 }

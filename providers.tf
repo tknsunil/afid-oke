@@ -21,3 +21,6 @@ provider "helm" {
   }
 }
 
+provider "http" {
+  # Configuration options
+}

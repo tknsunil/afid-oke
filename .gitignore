@@ -21,3 +21,6 @@ generated/**
 # Generated documentation
 docs/book
 oke-config
+secrets.json
+secrets.yaml
+.env
