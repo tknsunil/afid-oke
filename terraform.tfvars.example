@@ -1,0 +1,158 @@
+# Identity and access parameters
+api_fingerprint      = "xx:xx:xx:xx:xx:xx:x:xx:x:x:x:x:x:x:x:x"
+api_private_key_path = "~/.oci/path/to/oci_api_key.pem"
+
+home_region = "ap-sydney-1"
+region      = "ap-sydney-1"
+tenancy_id  = "ocid1.tenancy.oc1..xxxxx"
+user_id     = "ocid1.user.oc1..xxxxx"
+
+# general oci parameters
+compartment_id = "ocid1.compartment.oc1..xxxxx"
+timezone       = "Australia/Sydney"
+
+# ssh keys
+ssh_private_key_path = "~/.ssh/id_ed25519"
+ssh_public_key_path  = "~/.ssh/id_ed25519.pub"
+
+# networking
+create_vcn               = true
+assign_dns               = true
+lockdown_default_seclist = true
+vcn_cidrs                = ["10.0.0.0/16"]
+vcn_dns_label            = "oke"
+vcn_name                 = "afid_oke"
+
+# Subnets
+subnets = {
+  bastion  = { newbits = 13, netnum = 0, dns_label = "bastion", create = "always" }
+  operator = { newbits = 13, netnum = 1, dns_label = "operator", create = "always" }
+  cp       = { newbits = 13, netnum = 2, dns_label = "cp", create = "always" }
+  int_lb   = { newbits = 11, netnum = 16, dns_label = "ilb", create = "always" }
+  pub_lb   = { newbits = 11, netnum = 17, dns_label = "plb", create = "always" }
+  workers  = { newbits = 2, netnum = 1, dns_label = "workers", create = "always" }
+  pods     = { newbits = 2, netnum = 2, dns_label = "pods", create = "always" }
+}
+
+# bastion
+create_bastion        = false
+bastion_allowed_cidrs = ["0.0.0.0/0"]
+bastion_user          = "opc"
+
+# operator
+create_operator      = true
+operator_install_k9s = true
+
+
+# iam
+create_iam_operator_policy = "always"
+create_iam_resources       = true
+
+create_iam_tag_namespace = false // true/*false
+create_iam_defined_tags  = false // true/*false
+tag_namespace            = "afid_oke"
+use_defined_tags         = false // true/*false
+
+# cluster
+create_cluster     = true
+cluster_name       = "afid_oke"
+cni_type           = "flannel"
+kubernetes_version = "v1.32.1"
+pods_cidr          = "10.244.0.0/16"
+services_cidr      = "10.96.0.0/16"
+
+# Worker pool defaults
+worker_pool_size = 0
+worker_pool_mode = "node-pool"
+
+# Worker defaults
+await_node_readiness = "none"
+
+worker_pools = {
+  static = {
+    shape              = "VM.Standard.E4.Flex",
+    ocpus              = 2,
+    memory             = 16,
+    size               = 2,
+    boot_volume_size   = 200,
+    kubernetes_version = "v1.32.1"
+  }
+  dynamic = {
+    shape              = "VM.Standard.E4.Flex",
+    ocpus              = 2,
+    memory             = 16,
+    size               = 1,
+    boot_volume_size   = 200,
+    kubernetes_version = "v1.32.1",
+    autoscaling = {
+      enabled  = true
+      min_size = 1
+      max_size = 4
+    }
+  }
+}
+
+# Security
+allow_node_port_access            = false
+allow_worker_internet_access      = true
+allow_worker_ssh_access           = true
+control_plane_allowed_cidrs       = ["0.0.0.0/0"]
+control_plane_is_public           = true
+assign_public_ip_to_control_plane = true
+load_balancers                    = "both"
+preferred_load_balancer           = "public"
+kubeconfig_filename               = "./oke-config"
+
+# k8s
+environment  = "dev"
+core_tag     = "latest"
+nextjs_tag   = "latest"
+github_token = "github_pat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# secrets
+cloudflare_api_token = "xxx"
+
+django_github_oauth_client_id     = "xxxx"
+django_github_oauth_client_secret = "xxxx"
+django_secret_key                 = "xxxx"
+django_superuser_email            = "afid@afid.io"
+django_superuser_password         = "xxxx"
+django_superuser_username         = "afid"
+
+dockercred_email           = "xxxx@xxxx.xxx"
+dockercred_password        = "dckr_pat_xxxxxx"
+dockercred_registry_server = "https://index.docker.io/v1/"
+dockercred_username        = "xxxxx"
+
+
+emtmlib_keys_key1 = "xxxxxxx"
+emtmlib_keys_key2 = "xxxxxxx"
+
+grafana_github_oauth_client_id     = "xxxxxx"
+grafana_github_oauth_client_secret = "xxxxxx"
+
+loki_bucket_creds_access_key = "xxxxxx"
+loki_bucket_creds_secret_key = "xxxxxx"
+
+maxmind_licence_key = "xxxxxx"
+
+oracle_docker_creds_username        = "xxxxxx@xxxx.xxx"
+oracle_docker_creds_registry_server = "container-registry.oracle.com"
+oracle_docker_creds_password        = "xxxxxx"
+
+oracle_db_pass         = "xxxxxxx"
+postgres_auth_password = "xxxxxxx"
+
+rabbitmq_auth_password      = "xxxxxxxx"
+rabbitmq_auth_erlang_cookie = "xxxxxxxx"
+
+s3_creds_access_key = "xxxxxxx"
+s3_creds_secret_key = "xxxxxxx"
+
+stereolib_keys_key1 = "xxxxxxx"
+stereolib_keys_key2 = "xxxxxxx"
+
+
+letsencrypt_cert_tls_key        = ""
+letsencrypt_account_key_tls_key = ""
+letsencrypt_cert_tls_crt        = ""
