@@ -1,5 +1,6 @@
 
 module "helm_afid_apps" {
+  count  = 0 # disable deploying from here for now
   source = "./modules/k8s-deploy"
 
   environment = var.environment
@@ -7,6 +8,7 @@ module "helm_afid_apps" {
   nextjs_tag  = var.nextjs_tag
 
   kubernetes_namespace = var.kubernetes_namespace
+  registry_org         = var.registry_org
 
 
   github_token = var.github_token
@@ -38,4 +40,12 @@ variable "github_token" {
   default     = ""
   sensitive   = true
   description = "GitHub PAT if afid-deploy repo is private."
+}
+
+
+variable "registry_org" {
+  type        = string
+  description = "The base URL of the Git repository containing the Helm charts."
+  default     = "afid"
+
 }

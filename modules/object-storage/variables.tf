@@ -3,6 +3,11 @@ variable "compartment_id" {
   description = "The OCID of the compartment where the buckets will be created."
 }
 
+variable "tenancy_id" {
+  type        = string
+  description = "The OCID of the tenancy where the buckets will be created."
+}
+
 variable "region" {
   type        = string
   description = "The OCI region where the buckets will be created."

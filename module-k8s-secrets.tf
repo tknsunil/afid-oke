@@ -21,38 +21,57 @@ module "kubernetes_s3_secrets" {
   tempo_s3_endpoint_url = module.object_storage.object_storage_s3_endpoint
   tempo_s3_region       = module.object_storage.object_storage_region
 
-  emtmlib_keys_key1_value                   = var.emtmlib_keys_key1
-  emtmlib_keys_key2_value                   = var.emtmlib_keys_key2
-  loki_bucket_creds_access_key_value        = var.loki_bucket_creds_access_key
-  oracle_docker_creds_password_value        = var.oracle_docker_creds_password
-  django_github_oauth_client_secret_value   = var.django_github_oauth_client_secret
-  django_superuser_username_value           = var.django_superuser_username
-  s3_creds_access_key_value                 = var.s3_creds_access_key
-  stereolib_keys_key1_value                 = var.stereolib_keys_key1
-  django_github_oauth_client_id_value       = var.django_github_oauth_client_id
-  oracle_db_pass_value                      = var.oracle_db_pass
-  postgres_auth_password_value              = var.postgres_auth_password
-  rabbitmq_auth_password_value              = var.rabbitmq_auth_password
-  grafana_github_oauth_client_secret_value  = var.grafana_github_oauth_client_secret
-  loki_bucket_creds_secret_key_value        = var.loki_bucket_creds_secret_key
-  django_superuser_password_value           = var.django_superuser_password
-  letsencrypt_cert_tls_key_value            = var.letsencrypt_cert_tls_key
-  dockercred_email_value                    = var.dockercred_email
-  dockercred_password_value                 = var.dockercred_password
-  rabbitmq_auth_erlang_cookie_value         = var.rabbitmq_auth_erlang_cookie
+  # Database Credentials
+  oracle_db_pass_value         = var.oracle_db_pass
+  postgres_auth_password_value = var.postgres_auth_password
+
+  # Message Broker Credentials
+  rabbitmq_auth_password_value      = var.rabbitmq_auth_password
+  rabbitmq_auth_erlang_cookie_value = var.rabbitmq_auth_erlang_cookie
+
+  # Cloud & API Credentials
+  cloudflare_api_token_value = var.cloudflare_api_token
+  maxmind_licence_key_value  = var.maxmind_licence_key
+
+  # Storage Credentials (S3, Loki, etc.)
+  s3_creds_access_key_value          = coalesce(var.django_s3_access_key, var.s3_creds_access_key)
+  s3_creds_secret_key_value          = coalesce(var.django_s3_secret_key, var.s3_creds_secret_key)
+  loki_bucket_creds_access_key_value = coalesce(var.loki_s3_access_key, var.loki_bucket_creds_access_key)
+  loki_bucket_creds_secret_key_value = coalesce(var.loki_s3_secret_key, var.loki_bucket_creds_secret_key)
+
+  # Encryption & Security Keys
+  django_secret_key_value               = var.django_secret_key
+  letsencrypt_cert_tls_key_value        = var.letsencrypt_cert_tls_key
+  letsencrypt_cert_tls_crt_value        = var.letsencrypt_cert_tls_crt
+  letsencrypt_account_key_tls_key_value = var.letsencrypt_account_key_tls_key
+
+  # Docker Credentials
+  dockercred_email_value           = var.dockercred_email
+  dockercred_username_value        = var.dockercred_username
+  dockercred_password_value        = var.dockercred_password
+  dockercred_registry_server_value = var.dockercred_registry_server
+
+  # Oracle Container & Docker Credentials
   oracle_docker_creds_username_value        = var.oracle_docker_creds_username
-  s3_creds_secret_key_value                 = var.s3_creds_secret_key
-  letsencrypt_account_key_tls_key_value     = var.letsencrypt_account_key_tls_key
+  oracle_docker_creds_password_value        = var.oracle_docker_creds_password
   oracle_docker_creds_registry_server_value = var.oracle_docker_creds_registry_server
-  cloudflare_api_token_value                = var.cloudflare_api_token
-  django_superuser_email_value              = var.django_superuser_email
-  letsencrypt_cert_tls_crt_value            = var.letsencrypt_cert_tls_crt
-  dockercred_registry_server_value          = var.dockercred_registry_server
-  grafana_github_oauth_client_id_value      = var.grafana_github_oauth_client_id
-  maxmind_licence_key_value                 = var.maxmind_licence_key
-  stereolib_keys_key2_value                 = var.stereolib_keys_key2
-  django_secret_key_value                   = var.django_secret_key
-  dockercred_username_value                 = var.dockercred_username
+
+  # Django Application Credentials
+  django_github_oauth_client_id_value     = var.django_github_oauth_client_id
+  django_github_oauth_client_secret_value = var.django_github_oauth_client_secret
+  django_superuser_username_value         = var.django_superuser_username
+  django_superuser_password_value         = var.django_superuser_password
+  django_superuser_email_value            = var.django_superuser_email
+
+  # Grafana Authentication
+  grafana_github_oauth_client_id_value     = var.grafana_github_oauth_client_id
+  grafana_github_oauth_client_secret_value = var.grafana_github_oauth_client_secret
+
+  # Miscellaneous API Keys
+  emtmlib_keys_key1_value   = var.emtmlib_keys_key1
+  emtmlib_keys_key2_value   = var.emtmlib_keys_key2
+  stereolib_keys_key1_value = var.stereolib_keys_key1
+  stereolib_keys_key2_value = var.stereolib_keys_key2
 
   depends_on = [
     resource.local_file.kube_config_file,

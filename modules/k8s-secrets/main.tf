@@ -121,16 +121,16 @@ resource "kubernetes_secret" "dockercred" {
   }
   type = "kubernetes.io/dockerconfigjson"
   data = {
-    ".dockerconfigjson" = base64encode(jsonencode({
+    ".dockerconfigjson" = jsonencode({
       auths = {
         "${var.dockercred_registry_server_value}" = {
-          username = var.dockercred_username_value
-          password = var.dockercred_password_value
-          email    = var.dockercred_email_value
-          auth     = base64encode("${var.dockercred_username_value}:${var.dockercred_password_value}")
+          "username" = var.dockercred_username_value
+          "password" = var.dockercred_password_value
+          "email"    = var.dockercred_email_value
+          "auth"     = base64encode("${var.dockercred_username_value}:${var.dockercred_password_value}")
         }
       }
-    }))
+    })
   }
 }
 
@@ -243,16 +243,16 @@ resource "kubernetes_secret" "oracle_docker_creds" {
   }
   type = "kubernetes.io/dockerconfigjson"
   data = {
-    ".dockerconfigjson" = base64encode(jsonencode({
+    ".dockerconfigjson" = jsonencode({
       auths = {
         "${var.oracle_docker_creds_registry_server_value}" = {
-          username = var.oracle_docker_creds_username_value
-          password = var.oracle_docker_creds_password_value
-          email    = var.oracle_docker_creds_email_value
-          auth     = base64encode("${var.oracle_docker_creds_username_value}:${var.oracle_docker_creds_password_value}")
+          "username" = var.oracle_docker_creds_username_value
+          "password" = var.oracle_docker_creds_password_value
+          "email"    = var.oracle_docker_creds_email_value
+          "auth"     = base64encode("${var.oracle_docker_creds_username_value}:${var.oracle_docker_creds_password_value}")
         }
       }
-    }))
+    })
   }
 }
 

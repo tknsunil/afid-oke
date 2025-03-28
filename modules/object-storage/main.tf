@@ -77,7 +77,7 @@ resource "oci_objectstorage_bucket" "tempo_store" {
 
 # IAM User for Bucket Access
 resource "oci_identity_user" "bucket_access_user" {
-  compartment_id = var.compartment_id
+  compartment_id = var.tenancy_id
   description    = "User for programmatic access to object storage buckets for ${var.environment} environment"
   name           = "afid-bucket-access-user-${var.environment}" # Consider making the suffix more dynamic if needed
 }
@@ -99,14 +99,14 @@ resource "tls_private_key" "api_key" {
 
 # IAM Policy to Grant Permissions (Object Read for now - adjust as needed)
 resource "oci_identity_policy" "bucket_access_policy" {
-  compartment_id = var.compartment_id
+  compartment_id = var.tenancy_id
   name           = "afid-bucket-access-policy-${var.environment}" # Consider making the suffix more dynamic if needed
   description    = "Policy to grant read access to object storage buckets for ${var.environment} environment"
 
   statements = [
-    "Allow group afid-bucket-access-group-${var.environment} to read objects in compartment ${var.compartment_id} where target.bucket.name='afid-django-${var.environment}-store-7945'",
-    "Allow group afid-bucket-access-group-${var.environment} to read objects in compartment ${var.compartment_id} where target.bucket.name='afid-loki-${var.environment}-data-store-7945'",
-    "Allow group afid-bucket-access-group-${var.environment} to read objects in compartment ${var.compartment_id} where target.bucket.name='afid-tempo-${var.environment}-data-store-7945'",
+    "Allow group afid-bucket-access-group-${var.environment} to read objects in TENANCY where target.bucket.name='afid-django-${var.environment}-store-7945'",
+    "Allow group afid-bucket-access-group-${var.environment} to read objects in TENANCY where target.bucket.name='afid-loki-${var.environment}-data-store-7945'",
+    "Allow group afid-bucket-access-group-${var.environment} to read objects in TENANCY where target.bucket.name='afid-tempo-${var.environment}-data-store-7945'",
   ]
 
   lifecycle {
@@ -116,7 +116,7 @@ resource "oci_identity_policy" "bucket_access_policy" {
 
 # IAM Group for the User (Best Practice for Policy Management)
 resource "oci_identity_group" "bucket_access_group" {
-  compartment_id = var.compartment_id
+  compartment_id = var.tenancy_id
   description    = "Group for users accessing object storage buckets for ${var.environment} environment"
   name           = "afid-bucket-access-group-${var.environment}" # Consider making the suffix more dynamic if needed
 }

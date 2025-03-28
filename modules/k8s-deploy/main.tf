@@ -29,13 +29,16 @@ data "http" "afid_detectors_values_content" {
 }
 
 resource "helm_release" "afid_app" {
-  name            = "afid"
-  namespace       = var.kubernetes_namespace
-  chart           = "git+https://${var.git_repo_url}.git?ref=${var.git_ref}&path=helm-charts/afid"
-  timeout         = var.helm_timeout_seconds
-  atomic          = true
-  cleanup_on_fail = true
-  lint            = true
+  name                = "afid"
+  namespace           = var.kubernetes_namespace
+  chart               = "oci://ghcr.io/${var.registry_org}/afid/afid-core"
+  version             = "0.0.1"
+  repository_username = var.github_token
+  repository_password = var.github_token
+  timeout             = var.helm_timeout_seconds
+  atomic              = true
+  cleanup_on_fail     = true
+  lint                = true
 
   values = [
     data.http.afid_values_content.response_body
@@ -49,20 +52,72 @@ resource "helm_release" "afid_app" {
     name  = "nextjs.image.tag"
     value = var.nextjs_tag
   }
+  lifecycle {
+    ignore_changes = [
+      values,
+      set,
+      set_sensitive,
+      force_update,
+      recreate_pods,
+      wait,
+      timeout,
+      disable_crd_hooks,
+      disable_webhooks,
+      skip_crds,
+      render_subchart_notes,
+      verify,
+      keyring,
+      atomic,
+      cleanup_on_fail,
+      max_history,
+      dependency_update,
+      replace,
+      reset_values,
+      reuse_values,
+      wait_for_jobs,
+    ]
+  }
 
 }
 
 resource "helm_release" "afid_detectors_app" {
-  name            = "afid-detectors"
-  namespace       = var.kubernetes_namespace
-  chart           = "git+https://${var.git_repo_url}.git?ref=${var.git_ref}&path=helm-charts/afid-detectors"
-  timeout         = var.helm_timeout_seconds
-  atomic          = true
-  cleanup_on_fail = true
-  lint            = true
+  name                = "afid-detectors"
+  namespace           = var.kubernetes_namespace
+  chart               = "oci://ghcr.io/${var.registry_org}/afid-detectors/afid-detectors"
+  version             = "0.0.1"
+  repository_username = var.github_token
+  repository_password = var.github_token
+  timeout             = var.helm_timeout_seconds
+  atomic              = true
+  cleanup_on_fail     = true
+  lint                = true
 
   values = [
     data.http.afid_detectors_values_content.response_body
   ]
-
+  lifecycle {
+    ignore_changes = [
+      values,
+      set,
+      set_sensitive,
+      force_update,
+      recreate_pods,
+      wait,
+      timeout,
+      disable_crd_hooks,
+      disable_webhooks,
+      skip_crds,
+      render_subchart_notes,
+      verify,
+      keyring,
+      atomic,
+      cleanup_on_fail,
+      max_history,
+      dependency_update,
+      replace,
+      reset_values,
+      reuse_values,
+      wait_for_jobs,
+    ]
+  }
 }

@@ -2,6 +2,7 @@ module "object_storage" {
   source = "./modules/object-storage"
 
   compartment_id               = var.compartment_id
+  tenancy_id                   = var.tenancy_id
   region                       = var.region
   environment                  = "test"
   django_retention_time_amount = 10

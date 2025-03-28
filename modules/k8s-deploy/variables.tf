@@ -33,7 +33,7 @@ variable "git_repo_url" {
 variable "git_ref" {
   type        = string
   description = "The Git reference (branch, tag, or commit SHA) to check out for the Helm charts."
-  default     = "main"
+  default     = "dev"
 }
 
 variable "github_token" {
@@ -47,4 +47,11 @@ variable "helm_timeout_seconds" {
   type        = number
   description = "Timeout in seconds for Helm operations."
   default     = 600 # 10 minutes
+}
+
+variable "registry_org" {
+  type        = string
+  description = "The base URL of the Git repository containing the Helm charts."
+  default     = "afid"
+
 }
