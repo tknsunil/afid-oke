@@ -156,3 +156,11 @@ stereolib_keys_key2 = "xxxxxxx"
 letsencrypt_cert_tls_key        = ""
 letsencrypt_account_key_tls_key = ""
 letsencrypt_cert_tls_crt        = ""
+
+
+# Cloudflare
+
+cloudflare_zone_id   = "xxxx"
+app_subdomain        = "test.afid.io"
+app_ip_address     = "XXX.XXX.XXX.XXX"
+

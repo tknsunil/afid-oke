@@ -50,6 +50,10 @@ terraform {
       source  = "hashicorp/http"
       version = "~>3.0"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5"
+    }
   }
 }
 

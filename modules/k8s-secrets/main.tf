@@ -168,8 +168,9 @@ resource "kubernetes_secret" "letsencrypt_account_key" {
   }
   type = "Opaque"
   data = {
-    "tls.key" = var.letsencrypt_account_key_tls_key_value
+    "tls.key" = file(var.letsencrypt_account_key_tls_key_value)
   }
+
 }
 
 resource "kubernetes_secret" "letsencrypt_cert" {
@@ -193,8 +194,8 @@ resource "kubernetes_secret" "letsencrypt_cert" {
   }
   type = "kubernetes.io/tls"
   data = {
-    "tls.crt" = base64encode(var.letsencrypt_cert_tls_crt_value)
-    "tls.key" = base64encode(var.letsencrypt_cert_tls_key_value)
+    "tls.crt" = file(var.letsencrypt_cert_tls_crt_value)
+    "tls.key" = file(var.letsencrypt_cert_tls_key_value)
   }
 }
 

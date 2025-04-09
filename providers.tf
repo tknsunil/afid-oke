@@ -33,3 +33,7 @@ provider "kubernetes" {
 provider "http" {
   # Configuration options
 }
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}

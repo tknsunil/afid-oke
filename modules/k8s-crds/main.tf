@@ -110,9 +110,10 @@ resource "helm_release" "grafana_agent_crds" {
 
 
 resource "helm_release" "cert_manager" {
+  count            = 0
   name             = "cert-manager"
   chart            = "jetstack/cert-manager"
-  version          = "v1.0.4"
+  version          = "v1.17.1"
   namespace        = "cert-manager"
   repository       = "https://charts.jetstack.io"
   timeout          = 600
