@@ -74,8 +74,7 @@ module "kubernetes_s3_secrets" {
   stereolib_keys_key2_value = var.stereolib_keys_key2
 
   depends_on = [
-    resource.local_file.kube_config_file,
-    module.cluster[0].oci_containerengine_cluster
+    time_sleep.kubeconfig_setup,
   ]
 
 }

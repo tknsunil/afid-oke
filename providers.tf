@@ -17,7 +17,7 @@ provider "oci" {
 
 provider "helm" {
   kubernetes {
-    config_path = var.kubeconfig_filename
+    config_path = pathexpand(var.kubeconfig_filename)
   }
   registry {
     url      = "oci://ghcr.io/${var.registry_org}"
@@ -28,7 +28,7 @@ provider "helm" {
 }
 
 provider "kubernetes" {
-  config_path = var.kubeconfig_filename
+  config_path = pathexpand(var.kubeconfig_filename)
 }
 provider "http" {
   # Configuration options

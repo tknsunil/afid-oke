@@ -1,12 +1,12 @@
 module "dns" {
   source = "./modules/dns"
 
-  app_ip_address     = var.app_ip_address
+  app_ip_address     = module.ingress.load_balancer_ip
   app_subdomain      = var.app_subdomain
   cloudflare_zone_id = var.cloudflare_zone_id
 
   depends_on = [
-    module.cluster[0].oci_containerengine_cluster,
+    module.ingress.load_balancer_ip,
   ]
 }
 
@@ -20,7 +20,3 @@ variable "app_subdomain" {
   description = "Subdomain for the application"
 }
 
-variable "app_ip_address" {
-  type        = string
-  description = "IP address for the application"
-}
