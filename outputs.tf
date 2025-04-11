@@ -30,3 +30,9 @@ output "kubeconfig_path" {
   description = "Path to the generated kubeconfig file"
   value       = abspath(local_file.kube_config_file.filename)
 }
+
+
+output "redis_connection_string" {
+  description = "The connection string for Redis"
+  value       = var.redis_enabled ? module.redis.connection_string : null
+}
