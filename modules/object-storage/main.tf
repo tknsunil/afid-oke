@@ -126,3 +126,9 @@ resource "oci_identity_user_group_membership" "bucket_access_membership" {
   group_id = oci_identity_group.bucket_access_group.id
   user_id  = oci_identity_user.bucket_access_user.id
 }
+
+
+resource "oci_identity_customer_secret_key" "bucket_access_key" {
+  display_name = "bucket-access-key"
+  user_id      = oci_identity_user.bucket_access_user.id
+}

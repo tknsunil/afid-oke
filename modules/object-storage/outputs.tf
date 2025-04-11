@@ -16,9 +16,9 @@ output "bucket_access_key" {
 }
 
 output "bucket_access_secret_key" {
-  value       = tls_private_key.api_key.private_key_pem # Output the private key in PEM format
+  value       = oci_identity_customer_secret_key.bucket_access_key.key
   description = "S3 Secret Access Key for bucket access. This is the private key of the IAM user's API key."
-  sensitive   = true # Mark as sensitive to prevent accidental logging
+  sensitive   = true
 }
 
 output "bucket_access_api_key_fingerprint" {
