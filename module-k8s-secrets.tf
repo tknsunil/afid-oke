@@ -67,6 +67,10 @@ module "kubernetes_s3_secrets" {
   grafana_github_oauth_client_id_value     = var.grafana_github_oauth_client_id
   grafana_github_oauth_client_secret_value = var.grafana_github_oauth_client_secret
 
+  # Email Credentials
+  email_credentials_username = var.email_credentials_username
+  email_credentials_password = var.email_credentials_password
+
   # Miscellaneous API Keys
   emtmlib_keys_key1_value   = var.emtmlib_keys_key1
   emtmlib_keys_key2_value   = var.emtmlib_keys_key2
@@ -285,4 +289,13 @@ variable "django_secret_key" {
 variable "dockercred_username" {
   type        = string
   description = "dockercred_username"
+}
+
+variable "email_credentials_username" {
+  type        = string
+  description = "email_credentials_username"
+}
+variable "email_credentials_password" {
+  type        = string
+  description = "email_credentials_password"
 }

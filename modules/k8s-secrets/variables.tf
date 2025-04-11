@@ -19,6 +19,15 @@ variable "django_s3_region" {
   default     = ""
 }
 
+variable "email_credentials_username" {
+  type        = string
+  description = "Username for email credentials."
+}
+
+variable "email_credentials_password" {
+  type        = string
+  description = "Password for email credentials."
+}
 variable "loki_s3_access_key" {
   type        = string
   description = "Access key for Loki S3 secrets."

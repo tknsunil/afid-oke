@@ -101,13 +101,93 @@ control_plane_is_public           = true
 assign_public_ip_to_control_plane = true
 load_balancers                    = "both"
 preferred_load_balancer           = "public"
-kubeconfig_filename               = "./oke-config"
+kubeconfig_filename               = "~/.kube/oke-config"
 
 # k8s
 environment  = "dev"
 core_tag     = "latest"
 nextjs_tag   = "latest"
-github_token = "github_pat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+github_token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+registry_org = "tknsunil"
+
+# Oracle DB configuration
+oracle_db_enabled                 = true
+oracle_db_availability_domain     = ""
+oracle_db_subnet_id               = ""
+oracle_db_name                    = "ORCL"
+oracle_db_display_name            = "OracleDB"
+oracle_db_admin_password          = "xxxx"
+oracle_db_version                 = "19.0.0.0"
+oracle_db_edition                 = "STANDARD_EDITION"
+oracle_db_license_model           = "LICENSE_INCLUDED"
+oracle_db_shape                   = ""
+oracle_db_storage_size_in_gb      = 256
+oracle_db_storage_management      = "ASM"
+oracle_db_character_set           = "AL32UTF8"
+oracle_db_ncharacter_set          = "AL16UTF16"
+oracle_db_pdb_name                = "PDB1"
+oracle_db_workload                = "OLTP"
+oracle_db_backup_subnet_id        = ""
+oracle_db_backup_enabled          = true
+oracle_db_backup_retention_days   = 7
+oracle_db_auto_backup_window      = "SLOT_TWO"
+oracle_db_recovery_window_in_days = 7
+oracle_db_hostname                = "oracledb"
+oracle_db_domain                  = "example.com"
+oracle_db_node_count              = 1
+oracle_db_time_zone               = "UTC"
+oracle_db_auto_scaling_enabled    = false
+oracle_db_is_free_tier            = false
+oracle_db_private_endpoint_label  = "dbprivate"
+oracle_db_defined_tags            = {}
+oracle_db_freeform_tags           = {}
+
+# PostgreSQL configuration
+postgres_db_enabled              = false
+postgres_db_namespace            = "postgres-db"
+postgres_db_create_namespace     = true
+postgres_db_storage_class        = "oci-bv"
+postgres_db_pvc_size             = "8Gi"
+postgres_db_version              = "15.3.0"
+postgres_db_password             = "xxxx"
+postgres_db_username             = "postgres"
+postgres_db_database             = "postgres"
+postgres_db_port                 = 5432
+postgres_db_memory_limit         = "2Gi"
+postgres_db_cpu_limit            = "1"
+postgres_db_memory_request       = "1Gi"
+postgres_db_cpu_request          = "500m"
+postgres_db_ha_enabled           = false
+postgres_db_replicas             = 2
+postgres_db_metrics_enabled      = true
+postgres_db_service_type         = "ClusterIP"
+postgres_db_persistence_enabled  = true
+postgres_db_backup_enabled       = false
+postgres_db_backup_schedule      = "0 0 * * *"
+postgres_db_backup_storage_class = "oci-bv"
+postgres_db_backup_size          = "8Gi"
+
+
+# Monitoring and OpenTelemetry
+enable_monitoring      = true
+enable_otel            = true
+monitoring_namespace   = "monitoring"
+otel_namespace         = "monitoring"
+rabbitmq_namespace     = "default"
+ingress_namespace      = "default"
+cert_manager_namespace = "default"
+
+# Helm chart versions
+loki_helm_version           = "5.41.6"
+grafana_helm_version        = "7.0.21"
+vector_helm_version         = "0.28.0"
+otel_collector_helm_version = "0.70.0"
+tempo_helm_version          = "1.14.0"
+rabbitmq_helm_version       = "12.0.3"
+nginx_ingress_helm_version  = "4.8.3"
+cert_manager_helm_version   = "v1.13.3"
+
 
 # secrets
 cloudflare_api_token = "xxx"
@@ -124,6 +204,8 @@ dockercred_password        = "dckr_pat_xxxxxx"
 dockercred_registry_server = "https://index.docker.io/v1/"
 dockercred_username        = "xxxxx"
 
+email_credentials_password = "xxxx"
+email_credentials_username = "user@oci.com"
 
 emtmlib_keys_key1 = "xxxxxxx"
 emtmlib_keys_key2 = "xxxxxxx"
@@ -153,14 +235,56 @@ stereolib_keys_key1 = "xxxxxxx"
 stereolib_keys_key2 = "xxxxxxx"
 
 
-letsencrypt_cert_tls_key        = ""
-letsencrypt_account_key_tls_key = ""
-letsencrypt_cert_tls_crt        = ""
+letsencrypt_cert_tls_key        = "certs/key.pem"
+letsencrypt_account_key_tls_key = "certs/account_key.pem"
+letsencrypt_cert_tls_crt        = "certs/cert.pem"
 
 
-# Cloudflare
+cloudflare_zone_id = "xxxxx"
+app_subdomain      = "test.afid.io"
 
-cloudflare_zone_id   = "xxxx"
-app_subdomain        = "test.afid.io"
-app_ip_address     = "XXX.XXX.XXX.XXX"
 
+# Certificate configuration
+letsencrypt_email  = "your-email@example.com"
+letsencrypt_server = "https://acme-v02.api.letsencrypt.org/directory"
+
+# Load Balancer configuration
+create_load_balancer = false
+# Will use the public load balancer subnet created by the network module
+lb_subnet_ids     = []
+lb_name_prefix    = "afid"
+lb_min_bandwidth  = 10
+lb_max_bandwidth  = 100
+lb_is_private     = false
+lb_nsg_ids        = []
+lb_reserved_ip_id = ""
+
+# Redis configuration
+redis_enabled                   = false
+redis_namespace                 = "default"
+redis_create_namespace          = false
+redis_release_name              = "redis"
+redis_chart_version             = "17.9.5"
+redis_architecture              = "standalone"
+redis_full_name_override        = "afid-redis"
+redis_auth_enabled              = false
+redis_master_port               = 6379
+redis_persistence_enabled       = true
+redis_persistence_storage_class = "oci-bv"
+redis_persistence_size          = "8Gi"
+redis_metrics_enabled           = false
+redis_service_type              = "ClusterIP"
+
+# File Storage configuration
+create_file_storage                 = true
+file_storage_mount_target_name      = "afid-file-mount-target"
+file_storage_hostname_label         = "afidfs"
+file_storage_file_system_name       = "afid-file-system"
+file_storage_export_path            = "/afid"
+file_storage_export_source          = "0.0.0.0/0"
+file_storage_export_access          = "READ_WRITE"
+file_storage_export_identity_squash = "NONE"
+create_storage_class                = true
+storage_class_name                  = "oci-fss"
+storage_class_reclaim_policy        = "Delete"
+create_file_storage_policy          = true

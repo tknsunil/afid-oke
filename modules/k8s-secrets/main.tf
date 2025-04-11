@@ -134,6 +134,21 @@ resource "kubernetes_secret" "dockercred" {
   }
 }
 
+# email-credentials
+resource "kubernetes_secret" "email_credentials" {
+  lifecycle { ignore_changes = [metadata] }
+  metadata {
+    name      = "email-credentials"
+    namespace = var.kubernetes_namespace
+  }
+  type = "Opaque"
+  data = {
+    username = var.email_credentials_username
+    password = var.email_credentials_password
+  }
+
+}
+
 resource "kubernetes_secret" "emtmlib_keys" {
   lifecycle { ignore_changes = [metadata] }
   metadata {
