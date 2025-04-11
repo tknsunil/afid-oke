@@ -123,13 +123,13 @@ resource "null_resource" "validate_subnets" {
 resource "oci_core_subnet" "oke" {
   for_each = local.subnets_to_create
 
-  compartment_id             = var.compartment_id
-  vcn_id                     = var.vcn_id
-  cidr_block                 = lookup(local.subnet_cidrs_all, each.key)
-  display_name               = ( lookup(var.subnets, each.key, null) != null ? 
-    ( lookup(var.subnets[each.key], "display_name", null) != null ?
-        var.subnets[each.key]["display_name"] :
-        format("%v-%v", each.key, var.state_id) 
+  compartment_id = var.compartment_id
+  vcn_id         = var.vcn_id
+  cidr_block     = lookup(local.subnet_cidrs_all, each.key)
+  display_name = (lookup(var.subnets, each.key, null) != null ?
+    (lookup(var.subnets[each.key], "display_name", null) != null ?
+      var.subnets[each.key]["display_name"] :
+      format("%v-%v", each.key, var.state_id)
     ) :
     format("%v-%v", each.key, var.state_id)
   )
