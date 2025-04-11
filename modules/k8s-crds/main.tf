@@ -110,18 +110,16 @@ resource "helm_release" "grafana_agent_crds" {
 
 
 resource "helm_release" "cert_manager" {
-  count            = 0
   name             = "cert-manager"
-  chart            = "jetstack/cert-manager"
-  version          = "v1.17.1"
-  namespace        = "cert-manager"
+  chart            = "cert-manager"
   repository       = "https://charts.jetstack.io"
+  version          = var.cert_manager_helm_version
+  namespace        = var.cert_manager_namespace
   timeout          = 600
   atomic           = true
   cleanup_on_fail  = true
   lint             = true
   create_namespace = true
-  reuse_values     = true
 
   set {
     name  = "installCRDs"
@@ -153,4 +151,48 @@ resource "helm_release" "cert_manager" {
       wait_for_jobs,
     ]
   }
+
+  depends_on = [
+    var.kubeconfig_dependency
+  ]
+}
+
+# Create a ClusterIssuer for Let's Encrypt
+resource "kubernetes_manifest" "letsencrypt_cluster_issuer" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "ClusterIssuer"
+    metadata = {
+      name = "letsencrypt-prod"
+    }
+    spec = {
+      acme = {
+        server = var.letsencrypt_server
+        email  = var.letsencrypt_email
+        privateKeySecretRef = {
+          name = "letsencrypt-prod-account-key"
+        }
+        solvers = [
+          {
+            http01 = {
+              ingress = {
+                class = "nginx"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+
+  depends_on = [
+    helm_release.cert_manager,
+    time_sleep.wait_for_cert_manager
+  ]
+}
+
+# Wait for cert-manager to be ready before creating the ClusterIssuer
+resource "time_sleep" "wait_for_cert_manager" {
+  depends_on      = [helm_release.cert_manager]
+  create_duration = "30s"
 }

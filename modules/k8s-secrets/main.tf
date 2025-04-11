@@ -309,4 +309,3 @@ resource "kubernetes_secret" "stereolib_keys" {
     key2 = var.stereolib_keys_key2_value
   }
 }
-
