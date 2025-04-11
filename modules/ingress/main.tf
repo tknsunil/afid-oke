@@ -126,3 +126,55 @@ resource "kubernetes_ingress_v1" "rabbitmq_ingress" {
     helm_release.nginx_ingress
   ]
 }
+
+
+resource "kubernetes_ingress_v1" "afid_ingress" {
+  metadata {
+    name      = "afid-ingress"
+    namespace = var.ingress_namespace
+    annotations = {
+      "kubernetes.io/ingress.class"    = "nginx"
+      "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
+    }
+  }
+  spec {
+    rule {
+      host = var.subdomain
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "afid-django"
+              port {
+                number = 8000
+              }
+            }
+          }
+        }
+        path {
+          path      = "/_next/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "afid-nextjs"
+              port {
+                number = 3000
+              }
+            }
+          }
+        }
+      }
+    }
+
+    tls {
+      hosts       = [var.subdomain]
+      secret_name = "afid-tls"
+    }
+  }
+
+  depends_on = [
+    helm_release.nginx_ingress
+  ]
+}
