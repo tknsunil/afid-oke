@@ -194,9 +194,9 @@ resource "kubernetes_secret" "letsencrypt_cert" {
     name      = "letsencrypt-cert"
     namespace = var.kubernetes_namespace
     annotations = {
-      "cert-manager.io/alt-names"        = "dev.afid.io,monitoring.dev.afid.io,rabbitmq.dev.afid.io"
+      "cert-manager.io/alt-names"        = "${var.app_subdomain},monitoring.${var.app_subdomain},rabbitmq.${var.app_subdomain}"
       "cert-manager.io/certificate-name" = "letsencrypt-cert"
-      "cert-manager.io/common-name"      = "dev.afid.io"
+      "cert-manager.io/common-name"      = "${var.app_subdomain}"
       "cert-manager.io/ip-sans"          = ""
       "cert-manager.io/issuer-group"     = "cert-manager.io"
       "cert-manager.io/issuer-kind"      = "Issuer"

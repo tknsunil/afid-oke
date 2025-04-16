@@ -5,7 +5,7 @@ resource "oci_file_storage_mount_target" "afid_file_mount_target" {
   availability_domain = var.file_storage_availability_domain != "" ? var.file_storage_availability_domain : lookup(local.ad_numbers_to_names, local.ad_numbers[0])
   subnet_id           = var.file_storage_subnet_id != "" ? var.file_storage_subnet_id : module.network.worker_subnet_id
   display_name        = var.file_storage_mount_target_name
-  nsg_ids             = var.file_storage_nsg_ids != [] ? var.file_storage_nsg_ids : [module.network.worker_nsg_id]
+  nsg_ids             = [module.network.worker_nsg_id]
 
   # Use the worker subnet's security list by default
   hostname_label = var.file_storage_hostname_label
@@ -37,21 +37,6 @@ resource "oci_file_storage_file_system" "afid_file_system" {
   }
 }
 
-# Create an export for the file system
-resource "oci_file_storage_export" "afid_export" {
-  count          = var.create_file_storage ? 1 : 0
-  export_set_id  = oci_file_storage_export_set.afid_export_set[0].id
-  file_system_id = oci_file_storage_file_system.afid_file_system[0].id
-  path           = var.file_storage_export_path
-
-  export_options {
-    source                         = var.file_storage_export_source
-    access                         = var.file_storage_export_access
-    identity_squash                = var.file_storage_export_identity_squash
-    require_privileged_source_port = var.file_storage_export_require_privileged_source_port
-  }
-}
-
 # Create a Kubernetes storage class for the file storage
 resource "kubernetes_storage_class" "oci_fss_storage_class" {
   count = var.create_file_storage && var.create_storage_class ? 1 : 0
@@ -71,7 +56,6 @@ resource "kubernetes_storage_class" "oci_fss_storage_class" {
 
   depends_on = [
     oci_file_storage_mount_target.afid_file_mount_target,
-    oci_file_storage_export.afid_export,
     time_sleep.kubeconfig_setup
   ]
 

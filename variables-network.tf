@@ -172,6 +172,9 @@ variable "nsgs" {
     pub_lb   = {}
     workers  = {}
     pods     = {}
+    fss = {
+      create = "always"
+    }
   }
   description = "Configuration for standard network security groups (NSGs).  The 'create' parameter of each entry defaults to 'auto', creating NSGs when other enabled components are expected to utilize them, and may be configured with 'never' or 'always' to force disabled/enabled."
   type = map(object({

@@ -3,6 +3,8 @@
 module "kubernetes_s3_secrets" {
   source = "./modules/k8s-secrets"
 
+  app_subdomain = var.app_subdomain
+
   # Django S3 Secrets - Allow override, default to generated keys from object_storage module
   django_s3_access_key   = var.django_s3_access_key != "" ? var.django_s3_access_key : module.object_storage.bucket_access_key
   django_s3_secret_key   = var.django_s3_secret_key != "" ? var.django_s3_secret_key : module.object_storage.bucket_access_secret_key

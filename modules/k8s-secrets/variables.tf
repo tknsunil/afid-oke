@@ -287,3 +287,9 @@ variable "stereolib_keys_key2_value" {
   description = "Plain text value for stereolib key2."
   default     = "XXXXXXXXXX"
 }
+
+
+variable "app_subdomain" {
+  type        = string
+  description = "The subdomain for the application"
+}

@@ -41,36 +41,6 @@ variable "file_storage_file_system_name" {
   default     = "afid-file-system"
 }
 
-variable "file_storage_export_path" {
-  description = "The path for the file system export"
-  type        = string
-  default     = "/afid"
-}
-
-variable "file_storage_export_source" {
-  description = "The source for the file system export"
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
-variable "file_storage_export_access" {
-  description = "The access level for the file system export"
-  type        = string
-  default     = "READ_WRITE"
-}
-
-variable "file_storage_export_identity_squash" {
-  description = "The identity squash setting for the file system export"
-  type        = string
-  default     = "NONE"
-}
-
-variable "file_storage_export_require_privileged_source_port" {
-  description = "Whether to require privileged source port for the file system export"
-  type        = bool
-  default     = false
-}
-
 variable "create_storage_class" {
   description = "Whether to create a Kubernetes storage class for the file storage"
   type        = bool

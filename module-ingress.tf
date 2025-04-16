@@ -9,7 +9,7 @@ module "ingress" {
   monitoring_namespace       = var.monitoring_namespace
   rabbitmq_namespace         = var.rabbitmq_namespace
   enable_monitoring          = var.enable_monitoring
-  environment                = "dev"
+  environment                = var.environment
 
   # Load balancer configuration
   use_pre_created_lb     = false
