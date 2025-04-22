@@ -170,13 +170,16 @@ resource "kubernetes_manifest" "letsencrypt_cluster_issuer" {
         server = var.letsencrypt_server
         email  = var.letsencrypt_email
         privateKeySecretRef = {
-          name = "letsencrypt-prod-account-key"
+          name = "letsencrypt-account-key"
         }
         solvers = [
           {
-            http01 = {
-              ingress = {
-                class = "nginx"
+            dns01 = {
+              cloudflare = {
+                apiTokenSecretRef = {
+                  name = "cloudflare-api-token"
+                  key  = "token"
+                }
               }
             }
           }
