@@ -1,5 +1,4 @@
 module "kubernetes_crds" {
-  count  = 0
   source = "./modules/k8s-crds"
 
   cert_manager_namespace    = var.cert_manager_namespace

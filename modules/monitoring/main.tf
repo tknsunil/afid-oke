@@ -9,7 +9,6 @@ resource "kubernetes_namespace" "monitoring" {
 locals {
   loki_service_url       = "http://loki-gateway.${var.monitoring_namespace}.svc.cluster.local:80"
   prometheus_service_url = "http://kube-prometheus-stack-prometheus.${var.monitoring_namespace}.svc.cluster.local:9090"
-  # tempo_service_url       = "http://your-tempo-distributor.${var.monitoring_namespace}.svc.cluster.local:3200"
 
   # Grafana variables
   grafana_persistence_size = "10Gi"
@@ -86,7 +85,6 @@ resource "helm_release" "vector" {
 
   depends_on = [
     helm_release.loki,
-    # kubernetes_secret.maxmind_secret # If managing secret in TF
   ]
 }
 

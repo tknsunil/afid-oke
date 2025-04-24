@@ -66,7 +66,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
           path_type = "Prefix"
           backend {
             service {
-              name = "grafana"
+              name = "kube-prometheus-stack-grafana"
               port {
                 number = 80
               }
@@ -131,7 +131,7 @@ resource "kubernetes_ingress_v1" "rabbitmq_ingress" {
 resource "kubernetes_ingress_v1" "afid_ingress" {
   metadata {
     name      = "afid-ingress"
-    namespace = var.ingress_namespace
+    namespace = "default"
     annotations = {
       "kubernetes.io/ingress.class"    = "nginx"
       "cert-manager.io/cluster-issuer" = "letsencrypt-prod"

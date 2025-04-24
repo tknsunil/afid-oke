@@ -64,7 +64,7 @@ resource "kubernetes_secret" "cloudflare_api_token" {
 
   metadata {
     name      = "cloudflare-api-token"
-    namespace = var.kubernetes_namespace
+    namespace = "cert-manager"
   }
 
   type = "Opaque"
